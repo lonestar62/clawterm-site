@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClawTerm — Session-Persistent Protocol for AI Agents</title>
+  <meta name="description" content="ClawTerm is an open-source, session-persistent binary protocol for AI agent terminals. X.25-inspired. C daemon on Kubernetes. Sessions that never die." />
+  <meta property="og:title" content="ClawTerm" />
+  <meta property="og:description" content="Session-persistent protocol for AI agents. Built on X.25 principles. The transport layer AI customer service deserves." />
+  <style>
+    :root {
+      --green: #00ff88;
+      --dim-green: #00c060;
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: #1e1e1e;
+      --text: #d0d0d0;
+      --muted: #555;
+      --white: #f0f0f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', Courier, monospace;
+      line-height: 1.6;
+    }
+
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--green);
+      letter-spacing: 2px;
+    }
+    .nav-links { display: flex; gap: 28px; font-size: 13px; color: var(--muted); }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--green); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 900px;
+      margin: 80px auto 60px;
+      padding: 0 40px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #001a0d;
+      border: 1px solid var(--dim-green);
+      color: var(--green);
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 58px);
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 24px;
+      font-weight: normal;
+    }
+    h1 span { color: var(--green); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn {
+      padding: 12px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      letter-spacing: 1px;
+      border-radius: 3px;
+      cursor: pointer;
+      border: none;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: #000;
+      font-weight: bold;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      gap: 48px;
+      padding: 32px 40px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
+    .stat-value { font-size: 28px; color: var(--green); }
+    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── SECTION ── */
+    section {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 0 40px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: var(--white);
+      font-weight: normal;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 28px;
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .feature-title {
+      color: var(--white);
+      font-size: 14px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .feature-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* ── TERMINAL BLOCK ── */
+    .terminal {
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      background: var(--surface);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+
+    .terminal-title {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    .terminal-body {
+      padding: 24px;
+      font-size: 13px;
+      line-height: 2;
+      overflow-x: auto;
+    }
+
+    .t-comment { color: #3a3a3a; }
+    .t-green   { color: var(--green); }
+    .t-yellow  { color: #f0c060; }
+    .t-blue    { color: #60a0f0; }
+    .t-white   { color: var(--white); }
+    .t-muted   { color: var(--muted); }
+
+    /* ── PROTOCOL TABLE ── */
+    .proto-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .proto-table th {
+      text-align: left;
+      padding: 10px 16px;
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: normal;
+      letter-spacing: 1px;
+      font-size: 11px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .proto-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .proto-table tr:hover td { background: var(--surface); }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      border-radius: 2px;
+    }
+    .tag-green { background: #001a0d; color: var(--green); border: 1px solid #004020; }
+    .tag-blue  { background: #001020; color: #60a0f0;      border: 1px solid #002060; }
+
+    /* ── COMPARE TABLE ── */
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .compare-table th {
+      text-align: left; padding: 12px 16px;
+      background: var(--surface);
+      color: var(--muted); font-weight: normal;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); }
+    .compare-table tr:hover td { background: var(--surface); }
+    .yes { color: var(--green); }
+    .no  { color: #ff4444; }
+    .col-us { color: var(--white); font-weight: bold; }
+
+    /* ── BUILT-ON ── */
+    .built-on {
+      background: #030d07;
+      border: 1px solid #003020;
+      border-radius: 4px;
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .built-on-text h3 { color: var(--white); font-size: 20px; font-weight: normal; margin-bottom: 8px; }
+    .built-on-text p  { color: var(--muted); font-size: 14px; max-width: 480px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CLAWTERM</div>
+  <div class="nav-links">
+    <a href="#protocol">Protocol</a>
+    <a href="#features">Features</a>
+    <a href="#compare">Why ClawTerm</a>
+    <a href="https://github.com/lonestar62/clawterm" target="_blank">GitHub</a>
+    <a href="https://clawforgeai.com" target="_blank">ClawForge</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Open Source · MIT · v1.0</div>
+  <h1>Sessions that<br /><span>never die.</span></h1>
+  <p class="hero-sub">
+    ClawTerm is a session-persistent binary protocol for AI agent terminals.
+    Inspired by X.25 packet switching and IBM SNA. Built in C. Runs as a
+    Kubernetes DaemonSet. Your AI sessions survive network drops, device
+    switches, and reboots — because the session never closes.
+  </p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://github.com/lonestar62/clawterm" target="_blank">View on GitHub →</a>
+    <a class="btn btn-secondary" href="#protocol">Read the Spec</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-value">15B</span>
+    <span class="stat-label">Frame overhead</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">10K+</span>
+    <span class="stat-label">Sessions per core</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">~2MB</span>
+    <span class="stat-label">Container image</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">0</span>
+    <span class="stat-label">GC pauses (C)</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">7220</span>
+    <span class="stat-label">TCP port (VT220 nod)</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <p class="section-label">Features</p>
+  <h2>What makes ClawTerm different</h2>
+  <p class="section-sub">Every design decision exists because HTTP/WebSocket is the wrong foundation for persistent AI agent sessions.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">SUSPEND / RESUME</div>
+      <div class="feature-desc">Sessions survive any network interruption. Disconnect on laptop, reconnect on phone. Full context. Zero re-initialization. The agent never knew you left.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <div class="feature-title">15-Byte Frame Header</div>
+      <div class="feature-desc">Binary wire format inspired by HDLC. FLAG + SESSION_ID + SEQ + TYPE + FLAGS + LEN. No HTTP headers. No WebSocket framing. An order of magnitude leaner.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔌</div>
+      <div class="feature-title">Pod-Native IPC</div>
+      <div class="feature-desc">Communicates with agent pods via Unix domain sockets. Zero network hop. inotify-based pod registry — new pods auto-discovered when their socket file appears.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏗️</div>
+      <div class="feature-title">K8s DaemonSet</div>
+      <div class="feature-desc">One clawtermd per node. Sessions are node-local. hostPath volume shares socket directory with agent pods. Deploys in seconds with kubectl apply.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">♾️</div>
+      <div class="feature-title">Session Ring Buffer</div>
+      <div class="feature-desc">256KB outbound buffer per session. On RESUME, missed frames are replayed automatically. The client picks up exactly where it left off.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">TLS 1.3 + QUIC</div>
+      <div class="feature-desc">TCP path: TLS 1.3 mandatory. QUIC path (port 7221): connection migration for mobile — change IP without dropping session. Built-in encryption, no add-ons.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOL -->
+<section id="protocol">
+  <p class="section-label">Protocol Spec</p>
+  <h2>Wire format</h2>
+  <p class="section-sub">Everything on the wire. 15 bytes of overhead. Big-endian. CRC-16/IBM checksum.</p>
+
+  <div class="terminal" style="margin-bottom: 32px;">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <span class="terminal-title">clawterm wire format</span>
+    </div>
+    <div class="terminal-body">
+<span class="t-comment">// ClawTerm frame — 15 bytes fixed overhead + payload + CRC16</span>
+<br/><span class="t-blue">[</span><span class="t-green">FLAG:1</span><span class="t-blue">]</span><span class="t-white">[</span><span class="t-yellow">SESSION_ID:4BE</span><span class="t-white">]</span><span class="t-white">[</span><span class="t-yellow">SEQ:4BE</span><span class="t-white">]</span><span class="t-white">[</span><span class="t-green">TYPE:1</span><span class="t-white">]</span><span class="t-white">[</span><span class="t-muted">FLAGS:1</span><span class="t-white">]</span><span class="t-white">[</span><span class="t-blue">LEN:2BE</span><span class="t-white">]</span><span class="t-white">[PAYLOAD:N]</span><span class="t-white">[CRC16:2BE]</span>
+<br/><br/><span class="t-comment">// FLAG is always 0x7E — deliberate HDLC homage</span>
+<br/><span class="t-comment">// All multi-byte fields are big-endian (network byte order)</span>
+<br/><span class="t-comment">// CRC covers FLAG through end of PAYLOAD</span>
+    </div>
+  </div>
+
+  <table class="proto-table">
+    <thead>
+      <tr><th>Type</th><th>Value</th><th>Direction</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="t-green">CT_CONNECT</td><td>0x01</td><td><span class="tag tag-blue">C→S</span></td><td>Establish new session</td></tr>
+      <tr><td class="t-green">CT_ACCEPT</td><td>0x02</td><td><span class="tag tag-green">S→C</span></td><td>Session accepted, return session_id</td></tr>
+      <tr><td class="t-green">CT_RESUME</td><td>0x03</td><td><span class="tag tag-blue">C→S</span></td><td>Reconnect to existing session</td></tr>
+      <tr><td class="t-green">CT_RESUMED</td><td>0x04</td><td><span class="tag tag-green">S→C</span></td><td>Resume ack + replay buffered frames</td></tr>
+      <tr><td class="t-green">CT_DATA</td><td>0x10</td><td><span class="tag tag-blue">Both</span></td><td>Agent I/O payload</td></tr>
+      <tr><td class="t-green">CT_KEEPALIVE</td><td>0x20</td><td><span class="tag tag-blue">Both</span></td><td>Session heartbeat (30s interval)</td></tr>
+      <tr><td class="t-green">CT_SUSPEND</td><td>0x30</td><td><span class="tag tag-blue">C→S</span></td><td>Client going away — session stays warm</td></tr>
+      <tr><td class="t-green">CT_DISCONNECT</td><td>0x40</td><td><span class="tag tag-blue">Both</span></td><td>Clean session teardown</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- COMPARE -->
+<section id="compare">
+  <p class="section-label">Why ClawTerm</p>
+  <h2>HTTP/WebSocket was never the right answer</h2>
+  <p class="section-sub">HTTP is a stateless document delivery protocol. AI agents need persistent sessions. ClawTerm is built for the problem, not bolted onto a workaround.</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th>WebSocket</th>
+        <th class="col-us">ClawTerm</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Session persistence</td><td class="no">App-layer only</td><td class="yes col-us">Protocol-native</td></tr>
+      <tr><td>Mobile disconnect</td><td class="no">Session dies</td><td class="yes col-us">SUSPEND / RESUME</td></tr>
+      <tr><td>Multi-device resume</td><td class="no">New session</td><td class="yes col-us">Any device, full context</td></tr>
+      <tr><td>Frame overhead</td><td class="no">HTTP headers + framing</td><td class="yes col-us">15 bytes</td></tr>
+      <tr><td>Concurrency model</td><td class="no">Thread / goroutine per conn</td><td class="yes col-us">epoll, 10K+ / core</td></tr>
+      <tr><td>Pod IPC</td><td class="no">Network required</td><td class="yes col-us">Unix socket, zero-hop</td></tr>
+      <tr><td>Mobile transport</td><td class="no">TCP only</td><td class="yes col-us">QUIC (connection migration)</td></tr>
+      <tr><td>GC pauses</td><td class="no">Runtime-dependent</td><td class="yes col-us">Zero (C)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- QUICK START -->
+<section>
+  <p class="section-label">Quick Start</p>
+  <h2>Deploy in minutes</h2>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <span class="terminal-title">bash</span>
+    </div>
+    <div class="terminal-body">
+<span class="t-muted">$</span> <span class="t-green">git clone</span> <span class="t-white">https://github.com/lonestar62/clawterm</span>
+<br/><span class="t-muted">$</span> <span class="t-green">cd</span> <span class="t-white">clawterm</span>
+<br/><span class="t-muted">$</span> <span class="t-green">make</span>
+<br/><span class="t-comment"># or for ARM64 (Apple Silicon, Raspberry Pi, lobster-1)</span>
+<br/><span class="t-muted">$</span> <span class="t-green">make arm64</span>
+<br/><br/><span class="t-comment"># Deploy on Kubernetes</span>
+<br/><span class="t-muted">$</span> <span class="t-green">kubectl apply</span> <span class="t-white">-f k8s/daemonset.yaml</span>
+<br/><br/><span class="t-comment"># Or run directly</span>
+<br/><span class="t-muted">$</span> <span class="t-white">./clawtermd -p 7220 -s /run/claw/sockets</span>
+<br/><span class="t-green">clawtermd v1 starting (port 7220, sockets: /run/claw/sockets)</span>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT ON / CLAWFORGE -->
+<section>
+  <div class="built-on">
+    <div class="built-on-text">
+      <h3>Built into <a href="https://clawforgeai.com" style="color:var(--green);">ClawForge</a></h3>
+      <p>ClawTerm is the transport layer powering ClawForge — the customer session layer for AI agents. Deploy AI employees that know your business, with sessions that never drop.</p>
+    </div>
+    <a class="btn btn-primary" href="https://clawforgeai.com" target="_blank">Learn about ClawForge →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <strong style="color:var(--green);">CLAWTERM</strong> &nbsp;·&nbsp;
+    MIT License &nbsp;·&nbsp;
+    <a href="https://github.com/lonestar62/clawterm" target="_blank">GitHub</a> &nbsp;·&nbsp;
+    <a href="https://github.com/lonestar62/clawterm/blob/main/protocol/SPEC.md" target="_blank">Protocol Spec</a>
+  </div>
+  <div>Built by <a href="https://clawforgeai.com" target="_blank">DeepTx AI</a> — Deep East Texas</div>
+</footer>
+
+</body>
+</html>
