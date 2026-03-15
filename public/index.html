@@ -328,8 +328,8 @@
     .channel-icon { font-size: 28px; }
     .channel-name { font-size: 13px; color: var(--white); letter-spacing: 1px; }
     .channel-tag  { font-size: 11px; color: var(--muted); }
-    .channel-card.highlight { background: #170028; }
-    .channel-card.highlight .channel-name { color: var(--purple); }
+    .channel-card.highlight { background: #031a0e; }
+    .channel-card.highlight .channel-name { color: var(--green); }
     .channel-card.soon .channel-name { color: var(--muted); }
     .soon-badge {
       font-size: 10px;
@@ -482,7 +482,7 @@
       <div class="feature-title">TLS 1.3 + QUIC</div>
       <div class="feature-desc">TCP path: TLS 1.3 mandatory. QUIC path (port 7221): connection migration for mobile — change IP without dropping session. Built-in encryption, no add-ons.</div>
     </div>
-    <div class="feature-card" style="border: 1px solid #5b21b6;">
+    <div class="feature-card" style="border: 1px solid #004020;">
       <div class="feature-icon">✈️</div>
       <div class="feature-title">TELEGRAM CHANNEL</div>
       <div class="feature-desc">Telegram bots become persistent ClawTerm clients. The Telegram chat_id maps to a session_id — disconnect and reconnect on any device, full context intact. Powered by OpenClaw.</div>
@@ -552,37 +552,6 @@
       <tr><td>GC pauses</td><td class="no">Runtime-dependent</td><td class="yes col-us">Zero (C)</td></tr>
     </tbody>
   </table>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <p class="section-label">In Production</p>
-  <h2>What engineers say</h2>
-  <p class="section-sub">Teams running AI agents at scale on why they chose ClawTerm over HTTP and WebSocket.</p>
-
-  <div class="tqc-grid">
-    <div class="tqc-card">
-      <span class="tqc-quote-mark">"</span>
-      <p class="tqc-body">We migrated our entire agent fleet from WebSocket polling to ClawTerm in a single sprint.
-      <span class="tqc-accent">Session recovery dropped from 8 seconds to zero.</span>
-      Production incidents tied to agent context loss: eliminated. The protocol does exactly what it says on the tin.</p>
-      <p class="tqc-attribution">— Maya Chen, AI Platform Lead · Nexus Systems</p>
-    </div>
-    <div class="tqc-card">
-      <span class="tqc-quote-mark">"</span>
-      <p class="tqc-body">We were rebuilding session state on every mobile reconnect — a full round-trip to the LLM each time.
-      <span class="tqc-accent">ClawTerm's SUSPEND/RESUME cut that to a single frame replay.</span>
-      Our agents just keep working. Customers don't even notice the network switch.</p>
-      <p class="tqc-attribution">— Dmitri Volkov, CTO · AgentScale.io</p>
-    </div>
-    <div class="tqc-card">
-      <span class="tqc-quote-mark">"</span>
-      <p class="tqc-body">HTTP was never designed for this. <span class="tqc-accent">ClawTerm is.</span>
-      15-byte frames, epoll, Unix sockets — it reads like a protocol written by someone who actually studied how X.25 solved these problems forty years ago.
-      Finally a transport layer that respects the constraints of real agent infrastructure.</p>
-      <p class="tqc-attribution">— Sarah Okafor, Core Contributor · agent-runtime</p>
-    </div>
-  </div>
 </section>
 
 <!-- CHANNELS -->
