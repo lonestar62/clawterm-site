@@ -290,6 +290,41 @@
     .built-on-text h3 { color: var(--white); font-size: 20px; font-weight: normal; margin-bottom: 8px; }
     .built-on-text p  { color: var(--muted); font-size: 14px; max-width: 480px; }
 
+    /* ── CHANNELS ── */
+    .channels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .channel-card {
+      background: var(--surface);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      transition: background 0.15s;
+    }
+    .channel-card:hover { background: #181818; }
+    .channel-icon { font-size: 28px; }
+    .channel-name { font-size: 13px; color: var(--white); letter-spacing: 1px; }
+    .channel-tag  { font-size: 11px; color: var(--muted); }
+    .channel-card.highlight { background: #031a0e; }
+    .channel-card.highlight .channel-name { color: var(--green); }
+    .channel-card.soon .channel-name { color: var(--muted); }
+    .soon-badge {
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 2px 6px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 2px;
+    }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -314,6 +349,7 @@
   <div class="nav-links">
     <a href="#protocol">Protocol</a>
     <a href="#features">Features</a>
+    <a href="#channels">Channels</a>
     <a href="#compare">Why ClawTerm</a>
     <a href="https://github.com/lonestar62/clawterm" target="_blank">GitHub</a>
     <a href="https://clawforgeai.com" target="_blank">ClawForge</a>
@@ -397,6 +433,11 @@
       <div class="feature-title">TLS 1.3 + QUIC</div>
       <div class="feature-desc">TCP path: TLS 1.3 mandatory. QUIC path (port 7221): connection migration for mobile — change IP without dropping session. Built-in encryption, no add-ons.</div>
     </div>
+    <div class="feature-card" style="border: 1px solid #004020;">
+      <div class="feature-icon">✈️</div>
+      <div class="feature-title">TELEGRAM CHANNEL</div>
+      <div class="feature-desc">Telegram bots become persistent ClawTerm clients. The Telegram chat_id maps to a session_id — disconnect and reconnect on any device, full context intact. Powered by OpenClaw.</div>
+    </div>
   </div>
 </section>
 
@@ -462,6 +503,64 @@
       <tr><td>GC pauses</td><td class="no">Runtime-dependent</td><td class="yes col-us">Zero (C)</td></tr>
     </tbody>
   </table>
+</section>
+
+<!-- CHANNELS -->
+<section id="channels">
+  <p class="section-label">Channel Support</p>
+  <h2>Connect via any surface</h2>
+  <p class="section-sub">ClawTerm sessions are transport-agnostic. The same persistent session ID is addressable from TCP, Telegram, WhatsApp, or any OpenClaw-powered channel — resume mid-conversation from a different app.</p>
+
+  <div class="channels-grid">
+    <div class="channel-card highlight">
+      <div class="channel-icon">✈️</div>
+      <div class="channel-name">TELEGRAM</div>
+      <div class="channel-tag">Bot API · Long-poll</div>
+    </div>
+    <div class="channel-card">
+      <div class="channel-icon">🔌</div>
+      <div class="channel-name">TCP / QUIC</div>
+      <div class="channel-tag">Native protocol · Port 7220/7221</div>
+    </div>
+    <div class="channel-card">
+      <div class="channel-icon">💬</div>
+      <div class="channel-name">WEBCHAT</div>
+      <div class="channel-tag">OpenClaw UI · WebSocket bridge</div>
+    </div>
+    <div class="channel-card soon">
+      <div class="channel-icon">📱</div>
+      <div class="channel-name">WHATSAPP</div>
+      <div class="channel-tag">Business API</div>
+      <span class="soon-badge">COMING SOON</span>
+    </div>
+    <div class="channel-card soon">
+      <div class="channel-icon">🎮</div>
+      <div class="channel-name">DISCORD</div>
+      <div class="channel-tag">Bot gateway</div>
+      <span class="soon-badge">COMING SOON</span>
+    </div>
+    <div class="channel-card soon">
+      <div class="channel-icon">📡</div>
+      <div class="channel-name">SIGNAL</div>
+      <div class="channel-tag">Signal-cli bridge</div>
+      <span class="soon-badge">COMING SOON</span>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <span class="terminal-title">telegram → clawterm session resume</span>
+    </div>
+    <div class="terminal-body">
+<span class="t-comment"># User sends /start on Telegram → OpenClaw maps bot chat_id to ClawTerm session_id</span>
+<br/><span class="t-comment"># User sends a message on WhatsApp → same session_id, same context, zero re-init</span>
+<br/><br/><span class="t-muted">telegram:8421337  →</span> <span class="t-yellow">CT_RESUME</span> <span class="t-white">session_id=0xA3F2</span>
+<br/><span class="t-green">clawtermd          ←</span> <span class="t-yellow">CT_RESUMED</span> <span class="t-white">seq_replay=14..19</span> <span class="t-muted">(replaying 5 buffered frames)</span>
+<br/><span class="t-muted">telegram:8421337  →</span> <span class="t-yellow">CT_DATA</span>    <span class="t-white">"What's our Q2 pipeline?"</span>
+<br/><span class="t-green">agent-pod          ←</span> <span class="t-yellow">CT_DATA</span>    <span class="t-white">"$4.2M across 18 open opportunities..."</span>
+    </div>
+  </div>
 </section>
 
 <!-- QUICK START -->
