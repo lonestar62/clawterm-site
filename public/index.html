@@ -9,8 +9,8 @@
   <meta property="og:description" content="Session-persistent protocol for AI agents. Built on X.25 principles. The transport layer AI customer service deserves." />
   <style>
     :root {
-      --green: #00ff88;
-      --dim-green: #00c060;
+      --purple: #b084fc;
+      --dim-purple: #8b5cf6;
       --bg: #0a0a0a;
       --surface: #111;
       --border: #1e1e1e;
@@ -28,7 +28,7 @@
       line-height: 1.6;
     }
 
-    a { color: var(--green); text-decoration: none; }
+    a { color: var(--purple); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     /* ── NAV ── */
@@ -42,12 +42,12 @@
     .nav-logo {
       font-size: 18px;
       font-weight: bold;
-      color: var(--green);
+      color: var(--purple);
       letter-spacing: 2px;
     }
     .nav-links { display: flex; gap: 28px; font-size: 13px; color: var(--muted); }
     .nav-links a { color: var(--muted); }
-    .nav-links a:hover { color: var(--green); }
+    .nav-links a:hover { color: var(--purple); }
 
     /* ── HERO ── */
     .hero {
@@ -58,9 +58,9 @@
 
     .badge {
       display: inline-block;
-      background: #001a0d;
-      border: 1px solid var(--dim-green);
-      color: var(--green);
+      background: #1a0030;
+      border: 1px solid var(--dim-purple);
+      color: var(--purple);
       font-size: 11px;
       letter-spacing: 2px;
       padding: 4px 12px;
@@ -76,7 +76,7 @@
       margin-bottom: 24px;
       font-weight: normal;
     }
-    h1 span { color: var(--green); }
+    h1 span { color: var(--purple); }
 
     .hero-sub {
       font-size: 17px;
@@ -99,7 +99,7 @@
       display: inline-block;
     }
     .btn-primary {
-      background: var(--green);
+      background: var(--purple);
       color: #000;
       font-weight: bold;
     }
@@ -122,7 +122,7 @@
       flex-wrap: wrap;
     }
     .stat-item { display: flex; flex-direction: column; gap: 4px; }
-    .stat-value { font-size: 28px; color: var(--green); }
+    .stat-value { font-size: 28px; color: var(--purple); }
     .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
 
     /* ── SECTION ── */
@@ -136,7 +136,7 @@
       font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--green);
+      color: var(--purple);
       margin-bottom: 16px;
     }
 
@@ -222,7 +222,7 @@
     }
 
     .t-comment { color: #3a3a3a; }
-    .t-green   { color: var(--green); }
+    .t-green   { color: var(--purple); }
     .t-yellow  { color: #f0c060; }
     .t-blue    { color: #60a0f0; }
     .t-white   { color: var(--white); }
@@ -258,7 +258,7 @@
       font-size: 11px;
       border-radius: 2px;
     }
-    .tag-green { background: #001a0d; color: var(--green); border: 1px solid #004020; }
+    .tag-green { background: #1a0030; color: var(--purple); border: 1px solid #5b21b6; }
     .tag-blue  { background: #001020; color: #60a0f0;      border: 1px solid #002060; }
 
     /* ── COMPARE TABLE ── */
@@ -271,7 +271,7 @@
     }
     .compare-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); }
     .compare-table tr:hover td { background: var(--surface); }
-    .yes { color: var(--green); }
+    .yes { color: var(--purple); }
     .no  { color: #ff4444; }
     .col-us { color: var(--white); font-weight: bold; }
 
@@ -290,6 +290,41 @@
     .built-on-text h3 { color: var(--white); font-size: 20px; font-weight: normal; margin-bottom: 8px; }
     .built-on-text p  { color: var(--muted); font-size: 14px; max-width: 480px; }
 
+    /* ── CHANNELS ── */
+    .channels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .channel-card {
+      background: var(--surface);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      transition: background 0.15s;
+    }
+    .channel-card:hover { background: #181818; }
+    .channel-icon { font-size: 28px; }
+    .channel-name { font-size: 13px; color: var(--white); letter-spacing: 1px; }
+    .channel-tag  { font-size: 11px; color: var(--muted); }
+    .channel-card.highlight { background: #170028; }
+    .channel-card.highlight .channel-name { color: var(--purple); }
+    .channel-card.soon .channel-name { color: var(--muted); }
+    .soon-badge {
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 2px 6px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 2px;
+    }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -303,7 +338,7 @@
       font-size: 12px;
     }
     footer a { color: var(--muted); }
-    footer a:hover { color: var(--green); }
+    footer a:hover { color: var(--purple); }
   </style>
 </head>
 <body>
@@ -314,8 +349,8 @@
   <div class="nav-links">
     <a href="#protocol">Protocol</a>
     <a href="#features">Features</a>
+    <a href="#channels">Channels</a>
     <a href="#compare">Why ClawTerm</a>
-    <a href="https://github.com/lonestar62/clawterm" target="_blank">GitHub</a>
     <a href="https://clawforgeai.com" target="_blank">ClawForge</a>
   </div>
 </nav>
@@ -331,7 +366,6 @@
     switches, and reboots — because the session never closes.
   </p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="https://github.com/lonestar62/clawterm" target="_blank">View on GitHub →</a>
     <a class="btn btn-secondary" href="#protocol">Read the Spec</a>
   </div>
 </div>
@@ -396,6 +430,11 @@
       <div class="feature-icon">🔒</div>
       <div class="feature-title">TLS 1.3 + QUIC</div>
       <div class="feature-desc">TCP path: TLS 1.3 mandatory. QUIC path (port 7221): connection migration for mobile — change IP without dropping session. Built-in encryption, no add-ons.</div>
+    </div>
+    <div class="feature-card" style="border: 1px solid #5b21b6;">
+      <div class="feature-icon">✈️</div>
+      <div class="feature-title">TELEGRAM CHANNEL</div>
+      <div class="feature-desc">Telegram bots become persistent ClawTerm clients. The Telegram chat_id maps to a session_id — disconnect and reconnect on any device, full context intact. Powered by OpenClaw.</div>
     </div>
   </div>
 </section>
@@ -464,6 +503,64 @@
   </table>
 </section>
 
+<!-- CHANNELS -->
+<section id="channels">
+  <p class="section-label">Channel Support</p>
+  <h2>Connect via any surface</h2>
+  <p class="section-sub">ClawTerm sessions are transport-agnostic. The same persistent session ID is addressable from TCP, Telegram, WhatsApp, or any OpenClaw-powered channel — resume mid-conversation from a different app.</p>
+
+  <div class="channels-grid">
+    <div class="channel-card highlight">
+      <div class="channel-icon">✈️</div>
+      <div class="channel-name">TELEGRAM</div>
+      <div class="channel-tag">Bot API · Long-poll</div>
+    </div>
+    <div class="channel-card">
+      <div class="channel-icon">🔌</div>
+      <div class="channel-name">TCP / QUIC</div>
+      <div class="channel-tag">Native protocol · Port 7220/7221</div>
+    </div>
+    <div class="channel-card">
+      <div class="channel-icon">💬</div>
+      <div class="channel-name">WEBCHAT</div>
+      <div class="channel-tag">OpenClaw UI · WebSocket bridge</div>
+    </div>
+    <div class="channel-card soon">
+      <div class="channel-icon">📱</div>
+      <div class="channel-name">WHATSAPP</div>
+      <div class="channel-tag">Business API</div>
+      <span class="soon-badge">COMING SOON</span>
+    </div>
+    <div class="channel-card soon">
+      <div class="channel-icon">🎮</div>
+      <div class="channel-name">DISCORD</div>
+      <div class="channel-tag">Bot gateway</div>
+      <span class="soon-badge">COMING SOON</span>
+    </div>
+    <div class="channel-card soon">
+      <div class="channel-icon">📡</div>
+      <div class="channel-name">SIGNAL</div>
+      <div class="channel-tag">Signal-cli bridge</div>
+      <span class="soon-badge">COMING SOON</span>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <span class="terminal-title">telegram → clawterm session resume</span>
+    </div>
+    <div class="terminal-body">
+<span class="t-comment"># User sends /start on Telegram → OpenClaw maps bot chat_id to ClawTerm session_id</span>
+<br/><span class="t-comment"># User sends a message on WhatsApp → same session_id, same context, zero re-init</span>
+<br/><br/><span class="t-muted">telegram:8421337  →</span> <span class="t-yellow">CT_RESUME</span> <span class="t-white">session_id=0xA3F2</span>
+<br/><span class="t-green">clawtermd          ←</span> <span class="t-yellow">CT_RESUMED</span> <span class="t-white">seq_replay=14..19</span> <span class="t-muted">(replaying 5 buffered frames)</span>
+<br/><span class="t-muted">telegram:8421337  →</span> <span class="t-yellow">CT_DATA</span>    <span class="t-white">"What's our Q2 pipeline?"</span>
+<br/><span class="t-green">agent-pod          ←</span> <span class="t-yellow">CT_DATA</span>    <span class="t-white">"$4.2M across 18 open opportunities..."</span>
+    </div>
+  </div>
+</section>
+
 <!-- QUICK START -->
 <section>
   <p class="section-label">Quick Start</p>
@@ -474,8 +571,7 @@
       <span class="terminal-title">bash</span>
     </div>
     <div class="terminal-body">
-<span class="t-muted">$</span> <span class="t-green">git clone</span> <span class="t-white">https://github.com/lonestar62/clawterm</span>
-<br/><span class="t-muted">$</span> <span class="t-green">cd</span> <span class="t-white">clawterm</span>
+<span class="t-muted">$</span> <span class="t-green">cd</span> <span class="t-white">clawterm</span>
 <br/><span class="t-muted">$</span> <span class="t-green">make</span>
 <br/><span class="t-comment"># or for ARM64 (Apple Silicon, Raspberry Pi, lobster-1)</span>
 <br/><span class="t-muted">$</span> <span class="t-green">make arm64</span>
@@ -492,7 +588,7 @@
 <section>
   <div class="built-on">
     <div class="built-on-text">
-      <h3>Built into <a href="https://clawforgeai.com" style="color:var(--green);">ClawForge</a></h3>
+      <h3>Built into <a href="https://clawforgeai.com" style="color:var(--purple);">ClawForge</a></h3>
       <p>ClawTerm is the transport layer powering ClawForge — the customer session layer for AI agents. Deploy AI employees that know your business, with sessions that never drop.</p>
     </div>
     <a class="btn btn-primary" href="https://clawforgeai.com" target="_blank">Learn about ClawForge →</a>
@@ -502,10 +598,8 @@
 <!-- FOOTER -->
 <footer>
   <div>
-    <strong style="color:var(--green);">CLAWTERM</strong> &nbsp;·&nbsp;
-    MIT License &nbsp;·&nbsp;
-    <a href="https://github.com/lonestar62/clawterm" target="_blank">GitHub</a> &nbsp;·&nbsp;
-    <a href="https://github.com/lonestar62/clawterm/blob/main/protocol/SPEC.md" target="_blank">Protocol Spec</a>
+    <strong style="color:var(--purple);">CLAWTERM</strong> &nbsp;·&nbsp;
+    MIT License
   </div>
   <div>Built by <a href="https://clawforgeai.com" target="_blank">DeepTx AI</a> — Deep East Texas</div>
 </footer>
