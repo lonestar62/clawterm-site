@@ -200,19 +200,20 @@
 
     /* ── TERMINAL BLOCK ── */
     .terminal {
-      background: #050505;
-      border: 1px solid var(--border);
+      background: #0a0a0a;
+      border: 2px solid #00ff88;
       border-radius: 4px;
       overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,255,136,0.25), 0 0 40px rgba(0,255,136,0.08);
     }
 
     .terminal-bar {
-      background: var(--surface);
+      background: #0f1a0f;
       padding: 10px 16px;
       display: flex;
       align-items: center;
       gap: 8px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #00ff88;
     }
 
     .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -222,8 +223,9 @@
 
     .terminal-title {
       font-size: 12px;
-      color: var(--muted);
+      color: #00ff88;
       margin-left: 8px;
+      letter-spacing: 1px;
     }
 
     .terminal-body {
@@ -231,14 +233,15 @@
       font-size: 13px;
       line-height: 2;
       overflow-x: auto;
+      color: #d0d0d0;
     }
 
-    .t-comment { color: #aaa; }
-    .t-green   { color: var(--purple); }
+    .t-comment { color: #888; }
+    .t-green   { color: #00ff88; }
     .t-yellow  { color: #f0c060; }
     .t-blue    { color: #60a0f0; }
-    .t-white   { color: var(--white); }
-    .t-muted   { color: var(--muted); }
+    .t-white   { color: #f0f0f0; }
+    .t-muted   { color: #888; }
 
     /* ── PROTOCOL TABLE ── */
     .proto-table {
