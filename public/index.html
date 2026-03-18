@@ -26,8 +26,8 @@
       --bg: #0a0a0a;
       --surface: #111;
       --border: #1e1e1e;
-      --text: #d0d0d0;
-      --muted: #555;
+      --text: #f0f0f0;
+      --muted: #999;
       --white: #f0f0f0;
     }
 
@@ -233,7 +233,7 @@
       overflow-x: auto;
     }
 
-    .t-comment { color: #3a3a3a; }
+    .t-comment { color: #aaa; }
     .t-green   { color: var(--purple); }
     .t-yellow  { color: #f0c060; }
     .t-blue    { color: #60a0f0; }
@@ -369,7 +369,7 @@
     .tqc-body {
       font-family: 'Courier New', Courier, monospace;
       font-size: 14px;
-      color: #666;
+      color: #aaa;
       line-height: 1.85;
       margin-bottom: 20px;
     }
@@ -379,7 +379,7 @@
     .tqc-attribution {
       font-family: 'Courier New', Courier, monospace;
       font-size: 12px;
-      color: #444;
+      color: #888;
       letter-spacing: 1px;
     }
     .tqc-grid {
@@ -737,7 +737,7 @@
   .claw-dot-g { background: #28c840; }
   #claw-chat-title {
     font-size: 11px;
-    color: #555;
+    color: #aaa;
     letter-spacing: 1px;
     margin-left: 6px;
   }
@@ -760,8 +760,8 @@
     white-space: pre-wrap;
     word-break: break-word;
   }
-  .claw-msg-user { color: #666; }
-  .claw-msg-user::before { content: '> '; color: #444; }
+  .claw-msg-user { color: #aaa; }
+  .claw-msg-user::before { content: '> '; color: #888; }
   .claw-msg-assistant { color: #00ff88; }
 
   #claw-chat-input-row {
@@ -906,13 +906,13 @@ Ask about the protocol, deployment, or architecture.</div>
       <div style="border:1px solid #1e1e1e;padding:32px;background:#0d0d0d;">
         <p style="font-size:11px;letter-spacing:2px;color:#555;margin-bottom:12px;">SELF-HOSTED</p>
         <h3 style="font-size:32px;color:#00ff88;margin-bottom:4px;">Free</h3>
-        <p style="font-size:13px;color:#555;margin-bottom:24px;">MIT license. Your infra. Your K8s.</p>
+        <p style="font-size:13px;color:#ccc;margin-bottom:24px;">MIT license. Your infra. Your K8s.</p>
         <ul style="list-style:none;padding:0;margin:0 0 28px 0;border-top:1px solid #1e1e1e;padding-top:20px;">
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;Full ClawTerm protocol daemon</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;Unlimited sessions</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;~2MB container image</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;10,000+ sessions/core</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;">&#10003; &nbsp;Community support</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;Full ClawTerm protocol daemon</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;Unlimited sessions</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;~2MB container image</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;10,000+ sessions/core</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;">&#10003; &nbsp;Community support</li>
         </ul>
         <a href="https://github.com/lonestar62/clawterm" style="display:block;text-align:center;padding:12px;border:1px solid #00ff88;color:#00ff88;font-size:13px;letter-spacing:1px;text-decoration:none;">$ git clone &amp;&amp; make</a>
       </div>
@@ -920,13 +920,13 @@ Ask about the protocol, deployment, or architecture.</div>
       <div style="border:1px solid #1e1e1e;padding:32px;background:#0d0d0d;">
         <p style="font-size:11px;letter-spacing:2px;color:#555;margin-bottom:12px;">LOBSTER HOSTING</p>
         <h3 style="font-size:32px;color:#00ff88;margin-bottom:4px;">$12<span style="font-size:14px;color:#555;">/mo</span></h3>
-        <p style="font-size:13px;color:#555;margin-bottom:24px;">Managed. Dynamic DNS. No static IP.</p>
+        <p style="font-size:13px;color:#ccc;margin-bottom:24px;">Managed. Dynamic DNS. No static IP.</p>
         <ul style="list-style:none;padding:0;margin:0 0 28px 0;border-top:1px solid #1e1e1e;padding-top:20px;">
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;ClawTerm daemon managed for you</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;K8s pod on Lobster cluster</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;Auto-restart + health monitoring</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;border-bottom:1px solid #111;">&#10003; &nbsp;Dynamic hostname (.lobster.deeptxai.com)</li>
-          <li style="padding:7px 0;font-size:13px;color:#666;">&#10003; &nbsp;Email support</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;ClawTerm daemon managed for you</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;K8s pod on Lobster cluster</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;Auto-restart + health monitoring</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;border-bottom:1px solid #111;">&#10003; &nbsp;Dynamic hostname (.lobster.deeptxai.com)</li>
+          <li style="padding:7px 0;font-size:13px;color:#bbb;">&#10003; &nbsp;Email support</li>
         </ul>
         <a href="mailto:hello@deeptxai.com?subject=ClawTerm Lobster Hosting" style="display:block;text-align:center;padding:12px;border:1px solid #333;color:#888;font-size:13px;letter-spacing:1px;text-decoration:none;">Get Started</a>
       </div>
@@ -935,20 +935,20 @@ Ask about the protocol, deployment, or architecture.</div>
         <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#00ff88;color:#000;font-size:10px;font-weight:bold;letter-spacing:2px;padding:3px 12px;white-space:nowrap;">RECOMMENDED</div>
         <p style="font-size:11px;letter-spacing:2px;color:#555;margin-bottom:12px;margin-top:8px;">LOBSTER + STATIC IP</p>
         <h3 style="font-size:32px;color:#00ff88;margin-bottom:4px;">$29<span style="font-size:14px;color:#555;">/mo</span></h3>
-        <p style="font-size:13px;color:#555;margin-bottom:24px;">Production-grade. Fixed IP. Your domain.</p>
+        <p style="font-size:13px;color:#ccc;margin-bottom:24px;">Production-grade. Fixed IP. Your domain.</p>
         <ul style="list-style:none;padding:0;margin:0 0 28px 0;border-top:1px solid #1a2e1a;padding-top:20px;">
-          <li style="padding:7px 0;font-size:13px;color:#aaa;border-bottom:1px solid #111;">&#10003; &nbsp;Everything in managed tier</li>
+          <li style="padding:7px 0;font-size:13px;color:#ccc;border-bottom:1px solid #111;">&#10003; &nbsp;Everything in managed tier</li>
           <li style="padding:7px 0;font-size:13px;color:#00ff88;border-bottom:1px solid #111;">&#10003; &nbsp;Dedicated static IP</li>
-          <li style="padding:7px 0;font-size:13px;color:#aaa;border-bottom:1px solid #111;">&#10003; &nbsp;Point your own domain</li>
-          <li style="padding:7px 0;font-size:13px;color:#aaa;border-bottom:1px solid #111;">&#10003; &nbsp;TLS cert auto-provisioned</li>
-          <li style="padding:7px 0;font-size:13px;color:#aaa;border-bottom:1px solid #111;">&#10003; &nbsp;Priority support</li>
-          <li style="padding:7px 0;font-size:13px;color:#aaa;">&#10003; &nbsp;99.5% uptime SLA</li>
+          <li style="padding:7px 0;font-size:13px;color:#ccc;border-bottom:1px solid #111;">&#10003; &nbsp;Point your own domain</li>
+          <li style="padding:7px 0;font-size:13px;color:#ccc;border-bottom:1px solid #111;">&#10003; &nbsp;TLS cert auto-provisioned</li>
+          <li style="padding:7px 0;font-size:13px;color:#ccc;border-bottom:1px solid #111;">&#10003; &nbsp;Priority support</li>
+          <li style="padding:7px 0;font-size:13px;color:#ccc;">&#10003; &nbsp;99.5% uptime SLA</li>
         </ul>
         <a href="mailto:hello@deeptxai.com?subject=ClawTerm Static IP Hosting" style="display:block;text-align:center;padding:12px;background:#00ff88;color:#000;font-size:13px;font-weight:bold;letter-spacing:1px;text-decoration:none;">Get Static IP</a>
       </div>
 
     </div>
-    <p style="text-align:center;margin-top:28px;font-size:12px;color:#333;">Enterprise / high-volume? <a href="mailto:hello@deeptxai.com" style="color:#555;">hello@deeptxai.com</a></p>
+    <p style="text-align:center;margin-top:28px;font-size:12px;color:#888;">Enterprise / high-volume? <a href="mailto:hello@deeptxai.com" style="color:#aaa;">hello@deeptxai.com</a></p>
   </section>
 
 </body>
