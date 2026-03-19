@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Started — ClawTerm CLAWNET</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+      --border: #1e1e1e; --border2: #2a2a2a;
+      --text: #cccccc; --muted: #555; --dim: #333;
+      --green: #00ff41; --amber: #e8a030; --blue: #4a9eff; --red: #ff6666;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono','Courier New',monospace; min-height: 100vh; }
+    a { color: var(--green); text-decoration: none; }
+    nav { display:flex; align-items:center; gap:20px; padding:12px 40px; border-bottom:1px solid var(--border); }
+    .nav-logo { color:var(--green); font-weight:700; font-size:13px; letter-spacing:1px; }
+    .nav-links { display:flex; gap:20px; font-size:12px; margin-left:auto; }
+    .nav-links a { color:var(--muted); }
+    .nav-links a:hover { color:var(--green); }
+
+    .page { max-width:520px; margin:0 auto; padding:48px 24px; }
+
+    h1 { font-size:22px; color:#fff; margin-bottom:8px; }
+    .sub { font-size:12px; color:var(--muted); margin-bottom:32px; line-height:1.8; }
+
+    /* Tabs */
+    .tabs { display:flex; border-bottom:1px solid var(--border2); margin-bottom:28px; }
+    .tab { padding:10px 20px; font-size:12px; font-family:inherit; cursor:pointer;
+           border:none; background:transparent; color:var(--muted); letter-spacing:1px;
+           border-bottom:2px solid transparent; }
+    .tab.active { color:var(--green); border-bottom-color:var(--green); }
+
+    /* Form */
+    .form-group { margin-bottom:16px; }
+    label { display:block; font-size:10px; color:var(--muted); letter-spacing:2px; margin-bottom:6px; text-transform:uppercase; }
+    input[type=text], input[type=email], input[type=password] {
+      width:100%; background:var(--bg2); border:1px solid var(--border2);
+      color:var(--text); font-family:inherit; font-size:13px;
+      padding:10px 12px; outline:none; transition:border-color 0.15s;
+    }
+    input:focus { border-color:var(--green); }
+    input::placeholder { color:var(--muted); }
+
+    .applid-hint { font-size:10px; color:var(--muted); margin-top:4px; }
+    .applid-hint span { color:var(--green); }
+
+    .btn {
+      width:100%; padding:12px; background:var(--green); color:#0a0a0a;
+      border:none; font-family:inherit; font-size:13px; font-weight:700;
+      cursor:pointer; letter-spacing:1px; margin-top:8px; transition:background 0.15s;
+    }
+    .btn:hover { background:#00cc34; }
+    .btn:disabled { background:#1e3a2a; color:#2a2a2a; cursor:default; }
+
+    .error-msg { background:#1a0808; border:1px solid #ff444433; color:var(--red);
+                 padding:10px 14px; font-size:12px; margin-bottom:16px; display:none; }
+    .success-msg { background:#001a0a; border:1px solid #00ff4133; color:var(--green);
+                   padding:10px 14px; font-size:12px; margin-bottom:16px; display:none; }
+
+    /* Config download section */
+    #config-section { display:none; }
+    .config-box {
+      background:var(--bg2); border:1px solid var(--border2); padding:20px;
+      margin-bottom:20px;
+    }
+    .config-box h3 { font-size:13px; color:#e0e0e0; margin-bottom:12px; }
+    .config-box p { font-size:12px; color:var(--muted); line-height:1.8; margin-bottom:12px; }
+    .config-key { color:var(--amber); font-weight:700; font-size:14px; letter-spacing:2px; }
+
+    .steps-mini { list-style:none; }
+    .steps-mini li {
+      font-size:12px; color:var(--muted); padding:8px 0;
+      border-bottom:1px solid var(--border); line-height:1.7;
+    }
+    .steps-mini li:last-child { border:none; }
+    .steps-mini span { color:var(--amber); font-weight:700; margin-right:8px; }
+    .steps-mini code { color:var(--green); background:var(--bg2); padding:1px 5px; font-size:11px; }
+
+    .dl-btn {
+      display:block; width:100%; padding:10px; margin-top:8px;
+      background:transparent; border:1px solid var(--green); color:var(--green);
+      font-family:inherit; font-size:12px; font-weight:700; cursor:pointer;
+      letter-spacing:1px; text-align:center; transition:all 0.15s; text-decoration:none;
+    }
+    .dl-btn:hover { background:var(--green); color:#0a0a0a; }
+
+    .plan-badge {
+      display:inline-block; padding:3px 10px; font-size:10px; letter-spacing:1px;
+      background:#0d1a0d; border:1px solid #00ff4133; color:var(--green);
+      margin-bottom:20px;
+    }
+
+    /* Device list */
+    .device-list { margin-top:20px; }
+    .device-item {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 14px; background:var(--bg2); border:1px solid var(--border);
+      margin-bottom:8px; font-size:12px;
+    }
+    .device-applid { color:var(--green); font-weight:700; letter-spacing:2px; }
+    .device-status { font-size:10px; padding:2px 6px; letter-spacing:1px; }
+    .status-active { background:#001a0a; color:var(--green); border:1px solid #00ff4133; }
+    .status-pending { background:#1a1400; color:var(--amber); border:1px solid #e8a03033; }
+
+    .add-device-form { margin-top:20px; padding-top:20px; border-top:1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">⚡ CLAWTERM</span>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/download.html">Download</a>
+    <a href="https://github.com/lonestar62/clawterm" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <h1>Get on CLAWNET</h1>
+  <p class="sub">Create an account, pick your APPLID, download your config file. One click and your device is live on the CNA fabric.</p>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('signup')">Create Account</button>
+    <button class="tab" onclick="showTab('login')">Sign In</button>
+  </div>
+
+  <div id="error-msg" class="error-msg"></div>
+  <div id="success-msg" class="success-msg"></div>
+
+  <!-- Signup form -->
+  <div id="tab-signup">
+    <div class="plan-badge">✓ FREE during early access — no credit card required</div>
+    <form onsubmit="handleSignup(event)">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signup-email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signup-password" placeholder="min 8 characters" required minlength="8" />
+      </div>
+      <div class="form-group">
+        <label>Your APPLID <span style="color:#555;font-size:9px;"> — 1-8 uppercase letters/numbers</span></label>
+        <input type="text" id="signup-applid" placeholder="MYAGENT" maxlength="8"
+               oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')" required />
+        <div class="applid-hint">This is your address on the CNA fabric. e.g. <span>JOEMAC01</span>, <span>SALESBOT</span>, <span>MYAGENT1</span></div>
+      </div>
+      <button type="submit" class="btn" id="signup-btn">CREATE ACCOUNT + GET CONFIG</button>
+    </form>
+  </div>
+
+  <!-- Login form -->
+  <div id="tab-login" style="display:none">
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="your password" required />
+      </div>
+      <button type="submit" class="btn" id="login-btn">SIGN IN</button>
+    </form>
+  </div>
+
+  <!-- Config download section (shown after signup/login) -->
+  <div id="config-section">
+    <div class="config-box">
+      <h3>✅ Your CLAWNET config is ready</h3>
+      <p>APPLID: <span class="config-key" id="result-applid">-</span></p>
+      <p style="color:#555;font-size:11px;">Your config file contains your Tailscale auth key and APPLID. Keep it private.</p>
+      <a class="dl-btn" id="config-download-btn" href="#" download>⬇ Download clawterm.conf</a>
+    </div>
+
+    <div class="config-box">
+      <h3>Next steps</h3>
+      <ul class="steps-mini">
+        <li><span>1</span>Download your config file above</li>
+        <li><span>2</span>Download clawtermd from <a href="/download.html">download page</a></li>
+        <li><span>3</span>Put <code>clawterm.conf</code> in the same folder as clawtermd</li>
+        <li><span>4</span>Run: <code>clawtermd</code> — no flags needed, reads config automatically</li>
+        <li><span>5</span>Open <a href="https://clawterm.deeptxai.com" target="_blank">ClawTerm web client</a>, press <code>F2</code>, type your APPLID, press ENTER</li>
+      </ul>
+    </div>
+
+    <!-- Device list for returning users -->
+    <div id="device-list-section" style="display:none">
+      <h3 style="font-size:13px;color:#e0e0e0;margin-bottom:12px;">Your Devices</h3>
+      <div id="device-list" class="device-list"></div>
+
+      <div class="add-device-form">
+        <h3 style="font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:12px;">ADD ANOTHER DEVICE</h3>
+        <div class="form-group">
+          <label>New APPLID</label>
+          <input type="text" id="new-applid" placeholder="NEWDEVICE" maxlength="8"
+                 oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')" />
+        </div>
+        <button class="btn" onclick="addDevice()" style="margin-top:0;">ADD DEVICE</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+const API = 'https://keeper.deeptxai.com/api/clawnet';
+let currentTenantId = null;
+
+function showTab(tab) {
+  document.getElementById('tab-signup').style.display = tab === 'signup' ? '' : 'none';
+  document.getElementById('tab-login').style.display = tab === 'login' ? '' : 'none';
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='signup')||(i===1&&tab==='login')));
+  clearMessages();
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('success-msg').style.display = 'none';
+}
+
+function showSuccess(msg) {
+  const el = document.getElementById('success-msg');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('error-msg').style.display = 'none';
+}
+
+function clearMessages() {
+  document.getElementById('error-msg').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'none';
+}
+
+function setLoading(btnId, loading) {
+  const btn = document.getElementById(btnId);
+  btn.disabled = loading;
+  btn.textContent = loading ? 'PLEASE WAIT...' : btn.dataset.label || btn.textContent;
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  clearMessages();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const applid = document.getElementById('signup-applid').value.trim().toUpperCase();
+
+  if (!applid) { showError('APPLID is required'); return; }
+
+  setLoading('signup-btn', true);
+  document.getElementById('signup-btn').dataset.label = 'CREATE ACCOUNT + GET CONFIG';
+
+  try {
+    // 1. Create account
+    const signupRes = await fetch(`${API}/signup`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    const signup = await signupRes.json();
+    if (!signup.ok) { showError(signup.error); setLoading('signup-btn', false); return; }
+
+    currentTenantId = signup.tenant_id;
+
+    // 2. Provision device
+    const devRes = await fetch(`${API}/devices`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ tenant_id: currentTenantId, applid, device_name: applid })
+    });
+    const dev = await devRes.json();
+    if (!dev.ok) { showError(dev.error); setLoading('signup-btn', false); return; }
+
+    showConfigSection(dev);
+
+  } catch(err) {
+    showError('Network error — please try again');
+  }
+  setLoading('signup-btn', false);
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  clearMessages();
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  setLoading('login-btn', true);
+  document.getElementById('login-btn').dataset.label = 'SIGN IN';
+
+  try {
+    const res = await fetch(`${API}/login`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!data.ok) { showError(data.error); setLoading('login-btn', false); return; }
+
+    currentTenantId = data.tenant_id;
+
+    // Show device list
+    document.getElementById('tab-login').style.display = 'none';
+    document.getElementById('config-section').style.display = '';
+
+    if (data.devices && data.devices.length > 0) {
+      showDeviceList(data.devices);
+    } else {
+      document.getElementById('device-list-section').style.display = '';
+    }
+    showSuccess(`Welcome back. Tenant: ${data.tenant_id.substring(0,16)}...`);
+
+  } catch(err) {
+    showError('Network error — please try again');
+  }
+  setLoading('login-btn', false);
+}
+
+function showConfigSection(dev) {
+  document.getElementById('tab-signup').style.display = 'none';
+  document.getElementById('tab-login').style.display = 'none';
+  document.getElementById('config-section').style.display = '';
+  document.getElementById('result-applid').textContent = dev.applid;
+
+  // Create downloadable config file
+  const blob = new Blob([dev.config], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const dlBtn = document.getElementById('config-download-btn');
+  dlBtn.href = url;
+  dlBtn.download = dev.config_filename || `clawterm-${dev.applid.toLowerCase()}.conf`;
+
+  showSuccess(`APPLID ${dev.applid} provisioned. Download your config file below.`);
+}
+
+function showDeviceList(devices) {
+  const section = document.getElementById('device-list-section');
+  const list = document.getElementById('device-list');
+  section.style.display = '';
+  list.innerHTML = devices.map(d => `
+    <div class="device-item">
+      <div>
+        <div class="device-applid">${d.applid}</div>
+        <div style="font-size:10px;color:#555;margin-top:3px;">${d.device_name || ''} · ${d.tailscale_ip || 'pending IP'}</div>
+      </div>
+      <span class="device-status ${d.status === 'active' ? 'status-active' : 'status-pending'}">${d.status.toUpperCase()}</span>
+    </div>
+  `).join('');
+}
+
+async function addDevice() {
+  const applid = document.getElementById('new-applid').value.trim().toUpperCase();
+  if (!applid || !currentTenantId) { showError('Enter an APPLID first'); return; }
+
+  clearMessages();
+  try {
+    const res = await fetch(`${API}/devices`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ tenant_id: currentTenantId, applid, device_name: applid })
+    });
+    const dev = await res.json();
+    if (!dev.ok) { showError(dev.error); return; }
+    showConfigSection(dev);
+  } catch(err) {
+    showError('Network error');
+  }
+}
+</script>
+
+</body>
+</html>
