@@ -697,44 +697,48 @@
   }
   #claw-chat-panel.open { display: flex; }
 
-  /* VT220-style title bar — Unicode box top */
+  /* ClawTerm-style header bar */
   #claw-chat-titlebar {
-    background: #2a2a2e;
-    border-bottom: 1px solid #444;
-    padding: 5px 12px;
+    background: #161616;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 4px 8px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 5px;
     flex-shrink: 0;
     user-select: none;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    overflow-x: auto;
   }
-  #claw-chat-title {
+  #claw-logo {
+    font-weight: 700;
+    color: #00ff41;
     font-size: 12px;
-    color: #e8a030;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  #claw-chat-title-right {
-    font-size: 11px;
-    color: #787878;
     letter-spacing: 1px;
-  }
-
-  /* Status bar — amber, just like the TUI */
-  #claw-chat-statusbar {
-    background: #1a1a1a;
-    border-bottom: 1px solid #333;
-    padding: 3px 12px;
-    font-size: 11px;
-    color: #e8a030;
     flex-shrink: 0;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
-  #claw-chat-statusbar .status-dim { color: #787878; }
+  .hdr-sep2 { color: #2a2a2a; font-size: 14px; padding: 0 2px; flex-shrink: 0; }
+  .ct-hdr-label { font-size: 9px; color: #555; letter-spacing: 1px; flex-shrink: 0; }
+  .ct-applid { font-size: 11px; color: #00ff41; font-weight: 700; letter-spacing: 2px; flex-shrink: 0; }
+  .ct-diag {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 600; letter-spacing: 1px;
+    padding: 2px 6px; border: 1px solid transparent; border-radius: 2px;
+    cursor: default; flex-shrink: 0;
+  }
+  .ct-dot { font-size: 8px; }
+  .ct-diag.red    { border-color: #ff444433; color: #ff6666; background: #1a0808; }
+  .ct-diag.yellow { border-color: #ffaa0033; color: #ffcc44; background: #1a1400; }
+  .ct-diag.green  { border-color: #00ff4133; color: #00ff41; background: #001a0a; }
+  .ct-fkey {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 10px; color: #4a9eff; border: 1px solid #4a9eff33;
+    background: transparent; padding: 2px 6px; cursor: pointer;
+    border-radius: 2px; flex-shrink: 0; letter-spacing: 0.5px;
+  }
+  .ct-fkey:hover { background: #4a9eff15; border-color: #4a9eff66; }
+  .ct-fnum { color: #2a6aaa; font-size: 8px; }
 
   #claw-chat-messages {
     flex: 1;
@@ -778,6 +782,21 @@
     content: '∴ ';
     color: #e8a030;
     font-weight: bold;
+  }
+
+  /* Splash screen */
+  .claw-msg-splash {
+    background: #0d0d0d;
+    color: #cccccc;
+    border-left: none;
+    padding: 12px 14px;
+  }
+  .claw-ascii {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.2;
+    margin: 0;
+    overflow-x: auto;
   }
 
   /* Input row — matches TUI bottom bar */
@@ -838,20 +857,45 @@
 <button id="claw-chat-btn" title="Chat with CLAWTERM//DAEMON">&gt;_</button>
 
 <div id="claw-chat-panel">
+  <!-- ClawTerm-style header bar -->
   <div id="claw-chat-titlebar">
-    <span id="claw-chat-title">CLAWTERM//DAEMON</span>
-    <span id="claw-chat-title-right">CNA v1.0 │ PORT 7220</span>
-  </div>
-  <div id="claw-chat-statusbar">
-    <span>∴ running</span>
-    <span class="status-dim">•</span>
-    <span>session active</span>
-    <span class="status-dim">│</span>
-    <span class="status-dim">APPLID: CLAWTERM</span>
+    <span id="claw-logo">&#x26a1; CLAWTERM</span>
+    <span class="hdr-sep2">|</span>
+    <div class="ct-diag red" id="ct-diag-ws" title="WebSocket"><span class="ct-dot">&bull;</span> WS</div>
+    <div class="ct-diag red" id="ct-diag-ip" title="IP/TCP"><span class="ct-dot">&bull;</span> IP</div>
+    <div class="ct-diag red" id="ct-diag-vt" title="VT220 Session"><span class="ct-dot">&bull;</span> VT220</div>
+    <span class="hdr-sep2">|</span>
+    <span class="ct-hdr-label">APPLID:</span>
+    <span class="ct-applid">CLAWTERM</span>
+    <span class="hdr-sep2">|</span>
+    <button class="ct-fkey" title="F1 Help"><span class="ct-fnum">F1</span> Help</button>
+    <button class="ct-fkey" title="F2 VTAM Logon"><span class="ct-fnum">F2</span> VTAM</button>
+    <button class="ct-fkey" title="F3 Sessions"><span class="ct-fnum">F3</span> Sessions</button>
+    <button class="ct-fkey" title="F5 Suspend"><span class="ct-fnum">F5</span> Suspend</button>
+    <button class="ct-fkey" title="F9 Ping"><span class="ct-fnum">F9</span> Ping</button>
+    <span class="hdr-sep2">|</span>
+    <span id="claw-session-info" style="color:#555;font-size:10px;letter-spacing:1px;">no session</span>
   </div>
   <div id="claw-chat-messages">
-    <div class="claw-msg claw-msg-assistant">CLAWTERM//DAEMON online. Session initialized.
-Ask about the protocol, deployment, or architecture.</div>
+    <div class="claw-msg claw-msg-splash" id="claw-splash">
+<pre class="claw-ascii">
+<span style="color:#00ff41"> ██████╗█╗      █████╗ █╗    █╗███████╗███████╗██████╗ ███╗   ███╗</span>
+<span style="color:#00ff41">██╔════╝█╗     ██╔══██╗█╗    █╗╚══██╔══╝██╔════╝██╔══██╗████╗ ████║</span>
+<span style="color:#00ff41">██║     █╗     ███████║█╗ █╗ █╗   ██║   █████╗  ██████╔╝██╔████╔██║</span>
+<span style="color:#00ff41">██║     █╗     ██╔══██║█╗███╗ █╗   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║</span>
+<span style="color:#00ff41">╚██████╗███████╗██║  ██║╚███╔███╔╝   ██║   ███████╗██║  ██║██║ ╚═╝ ██║</span>
+<span style="color:#00ff41"> ╚═════╝╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝</span>
+</pre>
+<div style="color:#555;font-size:11px;letter-spacing:1px;margin-top:4px;">  X.25-inspired · Port 7220 (VT220) · HDLC frames · CNA v1.0</div>
+<div style="color:#787878;font-size:11px;margin-top:8px;">
+  <span style="color:#ffcc44">WS</span>  browser → fleet-vm WebSocket<br>
+  <span style="color:#ffcc44">IP</span>  fleet-vm TCP → clawd:7220<br>
+  <span style="color:#ffcc44">VT220</span>  CF_ACCEPT · session established
+</div>
+<div style="color:#555;font-size:11px;margin-top:10px;border-top:1px solid #2a2a2a;padding-top:8px;">
+  Press <span style="color:#4a9eff">F2</span> for VTAM logon &nbsp;·&nbsp; Ask about CNA, pricing, or deployment
+</div>
+    </div>
   </div>
   <div id="claw-chat-input-row">
     <span id="claw-chat-prompt"><span class="claw-cursor">█</span></span>
@@ -875,6 +919,29 @@ Ask about the protocol, deployment, or architecture.</div>
     if (e.target !== sendBtn) input.focus();
   });
 
+  // F-key handlers — inject canned queries
+  var fkeyMap = {
+    'F1 Help':     'How do I get started with ClawTerm?',
+    'F2 VTAM':     'Walk me through the VTAM logon and APPLID connection flow.',
+    'F3 Sessions': 'How does session persistence work in ClawTerm?',
+    'F5 Suspend':  'How does CF_SUSPEND and CF_RESUME work?',
+    'F9 Ping':     'What is CLAWNET and how much does it cost?',
+  };
+  document.querySelectorAll('.ct-fkey').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var label = btn.textContent.trim();
+      var query = fkeyMap[label];
+      if (query) {
+        // Dismiss splash on first interaction
+        var splash = document.getElementById('claw-splash');
+        if (splash) { splash.style.display = 'none'; }
+        input.value = query;
+        send();
+      }
+    });
+  });
+
   btn.addEventListener("click", function () {
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) input.focus();
@@ -894,6 +961,10 @@ Ask about the protocol, deployment, or architecture.</div>
     if (!text) return;
     input.value = '';
     input.disabled = true; sendBtn.disabled = true;
+
+    // Dismiss splash on first message
+    var splash = document.getElementById('claw-splash');
+    if (splash) { splash.style.display = 'none'; }
 
     addMsg('user', text);
     history.push({ role: 'user', content: text });
