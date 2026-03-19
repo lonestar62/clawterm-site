@@ -892,7 +892,11 @@ Ask about the protocol, deployment, or architecture.</div>
             if (data === '[DONE]') continue;
             try {
               var parsed = JSON.parse(data);
-              if (parsed.text) {
+              if (parsed.error) {
+                fullText = "ERROR: " + parsed.error;
+                assistantDiv.textContent = fullText;
+                assistantDiv.style.color = "#ff5f57";
+              } else if (parsed.text) {
                 fullText += parsed.text;
                 assistantDiv.textContent = fullText;
                 msgs.scrollTop = msgs.scrollHeight;
