@@ -172,20 +172,48 @@
   <!-- Config download section (shown after signup/login) -->
   <div id="config-section">
     <div class="config-box">
-      <h3>✅ Your CLAWNET config is ready</h3>
-      <p>APPLID: <span class="config-key" id="result-applid">-</span></p>
-      <p style="color:#555;font-size:11px;">Your config file contains your Tailscale auth key and APPLID. Keep it private.</p>
-      <a class="dl-btn" id="config-download-btn" href="#" download>⬇ Download clawterm.conf</a>
+      <h3>✅ APPLID <span class="config-key" id="result-applid">-</span> is provisioned</h3>
+      <p style="color:#787878;font-size:12px;margin-bottom:16px;">
+        Your package contains the clawd binary + your config file pre-baked in.<br>
+        Extract and run — no setup, no flags.
+      </p>
+
+      <!-- Platform download buttons -->
+      <div style="display:flex;flex-direction:column;gap:8px;" id="platform-downloads">
+        <a class="dl-btn" id="dl-linux" href="#" style="background:#001a0a;color:#00ff41;border:1px solid #00ff4155;">
+          🐧 Download for Linux (x86_64) — .tar.gz
+        </a>
+        <a class="dl-btn" id="dl-windows" href="#" style="background:#1a1400;color:#e8a030;border:1px solid #e8a03055;cursor:not-allowed;opacity:0.6;">
+          🪟 Windows — Coming Soon
+        </a>
+        <a class="dl-btn" id="dl-macos" href="#" style="background:#1a1400;color:#e8a030;border:1px solid #e8a03055;cursor:not-allowed;opacity:0.6;">
+          🍎 macOS — Coming Soon
+        </a>
+      </div>
+
+      <div style="margin-top:12px;padding:10px 12px;background:#0d0d0d;border:1px solid #1e1e1e;font-size:11px;color:#555;">
+        Also available: <a id="config-download-btn" href="#" style="color:#4a9eff;">download config file only</a>
+        — if you already have the binary
+      </div>
     </div>
 
     <div class="config-box">
-      <h3>Next steps</h3>
+      <h3>What's in the package</h3>
       <ul class="steps-mini">
-        <li><span>1</span>Download your config file above</li>
-        <li><span>2</span>Download clawtermd from <a href="/download.html">download page</a></li>
-        <li><span>3</span>Put <code>clawterm.conf</code> in the same folder as clawtermd</li>
-        <li><span>4</span>Run: <code>clawtermd</code> — no flags needed, reads config automatically</li>
-        <li><span>5</span>Open <a href="https://clawterm.deeptxai.com" target="_blank">ClawTerm web client</a>, press <code>F2</code>, type your APPLID, press ENTER</li>
+        <li><span>📦</span><code>clawd</code> — the ClawTerm daemon binary</li>
+        <li><span>🔑</span><code>clawterm.conf</code> — your config with Tailscale auth key pre-baked</li>
+        <li><span>📄</span><code>README.txt</code> — quick start instructions</li>
+        <li><span>⚡</span><code>install.sh</code> — one-click launcher (Linux/macOS)</li>
+      </ul>
+    </div>
+
+    <div class="config-box">
+      <h3>Run it</h3>
+      <ul class="steps-mini">
+        <li><span>1</span>Extract: <code>tar -xzf clawterm-*.tar.gz</code></li>
+        <li><span>2</span>Run: <code>./install.sh</code> or <code>./clawd</code></li>
+        <li><span>3</span>Open <a href="https://clawterm.deeptxai.com" target="_blank">ClawTerm web client</a></li>
+        <li><span>4</span>Press <code>F2</code> → type <span id="run-applid" style="color:#00ff41;font-weight:700;">APPLID</span> → ENTER</li>
       </ul>
     </div>
 
@@ -322,15 +350,26 @@ function showConfigSection(dev) {
   document.getElementById('tab-login').style.display = 'none';
   document.getElementById('config-section').style.display = '';
   document.getElementById('result-applid').textContent = dev.applid;
+  if (document.getElementById('run-applid')) {
+    document.getElementById('run-applid').textContent = dev.applid;
+  }
 
-  // Create downloadable config file
-  const blob = new Blob([dev.config], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const dlBtn = document.getElementById('config-download-btn');
-  dlBtn.href = url;
-  dlBtn.download = dev.config_filename || `clawterm-${dev.applid.toLowerCase()}.conf`;
+  var base = 'https://keeper.deeptxai.com/api/clawnet/download?tenant_id=' + currentTenantId + '&applid=' + dev.applid;
 
-  showSuccess(`APPLID ${dev.applid} provisioned. Download your config file below.`);
+  // Linux download — real bundle
+  var dlLinux = document.getElementById('dl-linux');
+  dlLinux.href = base + '&platform=linux';
+  dlLinux.download = 'clawterm-' + dev.applid.toLowerCase() + '-linux.tar.gz';
+  dlLinux.style.cursor = 'pointer';
+
+  // Config file only
+  var blob = new Blob([dev.config], { type: 'text/plain' });
+  var url = URL.createObjectURL(blob);
+  var dlConf = document.getElementById('config-download-btn');
+  dlConf.href = url;
+  dlConf.download = dev.config_filename || ('clawterm-' + dev.applid.toLowerCase() + '.conf');
+
+  showSuccess('APPLID ' + dev.applid + ' provisioned. Download your package below.');
 }
 
 function showDeviceList(devices) {
