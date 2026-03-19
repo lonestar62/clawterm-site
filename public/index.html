@@ -930,11 +930,11 @@ Ask about the protocol, deployment, or architecture.</div>
               var parsed = JSON.parse(data);
               if (parsed.error) {
                 fullText = "ERROR: " + parsed.error;
-                assistantDiv.textContent = fullText;
+                assistantDiv.textContent = fullText.replace(/\n?> ?_\s*$/, "").trimEnd();
                 assistantDiv.style.color = "#ff5f57";
               } else if (parsed.text) {
                 fullText += parsed.text;
-                assistantDiv.textContent = fullText;
+                assistantDiv.textContent = fullText.replace(/\n?> ?_\s*$/, "").trimEnd();
                 msgs.scrollTop = msgs.scrollHeight;
               }
             } catch (e) {}
