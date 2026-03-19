@@ -775,7 +775,7 @@
     border-left: 2px solid #444;
   }
   .claw-msg-assistant::before {
-    content: '4 ';  /* ∴ THEREFORE — matches openclaw-tui status symbol */
+    content: '∴ ';
     color: #e8a030;
     font-weight: bold;
   }
@@ -788,6 +788,14 @@
     align-items: center;
     padding: 0 12px;
     flex-shrink: 0;
+  }
+  #claw-cursor {
+    animation: claw-blink 1s step-end infinite;
+    color: #e8e8e8;
+  }
+  @keyframes claw-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
   #claw-chat-prompt {
     color: #e8a030;
@@ -846,7 +854,7 @@
 Ask about the protocol, deployment, or architecture.</div>
   </div>
   <div id="claw-chat-input-row">
-    <span id="claw-chat-prompt">&gt;_</span>
+    <span id="claw-chat-prompt"><span class="claw-cursor">█</span></span>
     <input id="claw-chat-input" type="text" placeholder="enter command..." autocomplete="off" />
     <button id="claw-chat-send">SEND</button>
   </div>
