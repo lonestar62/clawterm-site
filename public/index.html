@@ -658,26 +658,28 @@
 
 <!-- CLAWTERM CHAT WIDGET -->
 <style>
+  /* ── VT220 TUI Chat Widget — matches openclaw-tui palette ── */
   #claw-chat-btn {
     position: fixed;
     bottom: 24px;
     right: 24px;
     width: 52px;
     height: 52px;
-    background: #00ff88;
-    color: #0a0a0a;
-    border: none;
+    background: #1a1a1a;
+    color: #e8a030;
+    border: 1px solid #e8a030;
     border-radius: 0;
     font-family: 'Courier New', monospace;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
+    letter-spacing: 1px;
   }
-  #claw-chat-btn:hover { background: #00cc6a; }
+  #claw-chat-btn:hover { background: #2a2a2e; color: #f0b840; border-color: #f0b840; }
 
   #claw-chat-panel {
     position: fixed;
@@ -685,114 +687,167 @@
     right: 24px;
     width: 680px;
     height: 560px;
-    background: #0a0a0a;
-    border: 1px solid #00ff88;
+    background: #1a1a1a;
+    border: 1px solid #444;
     display: none;
     flex-direction: column;
     z-index: 9998;
     font-family: 'Courier New', monospace;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.7);
   }
   #claw-chat-panel.open { display: flex; }
 
+  /* VT220-style title bar — Unicode box top */
   #claw-chat-titlebar {
-    background: #111;
-    border-bottom: 1px solid #1e1e1e;
-    padding: 8px 12px;
+    background: #2a2a2e;
+    border-bottom: 1px solid #444;
+    padding: 5px 12px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
     flex-shrink: 0;
+    user-select: none;
   }
-  .claw-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .claw-dot-r { background: #ff5f57; }
-  .claw-dot-y { background: #febc2e; }
-  .claw-dot-g { background: #28c840; }
   #claw-chat-title {
-    font-size: 11px;
-    color: #aaa;
-    letter-spacing: 1px;
-    margin-left: 6px;
+    font-size: 12px;
+    color: #e8a030;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
   }
+  #claw-chat-title-right {
+    font-size: 11px;
+    color: #787878;
+    letter-spacing: 1px;
+  }
+
+  /* Status bar — amber, just like the TUI */
+  #claw-chat-statusbar {
+    background: #1a1a1a;
+    border-bottom: 1px solid #333;
+    padding: 3px 12px;
+    font-size: 11px;
+    color: #e8a030;
+    flex-shrink: 0;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #claw-chat-statusbar .status-dim { color: #787878; }
 
   #claw-chat-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0;
+    background: #1a1a1a;
   }
   #claw-chat-messages::-webkit-scrollbar { width: 4px; }
-  #claw-chat-messages::-webkit-scrollbar-track { background: #0a0a0a; }
+  #claw-chat-messages::-webkit-scrollbar-track { background: #1a1a1a; }
   #claw-chat-messages::-webkit-scrollbar-thumb { background: #444; }
 
+  /* Message blocks — VT220 style */
   .claw-msg {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.55;
     white-space: pre-wrap;
     word-break: break-word;
+    padding: 8px 14px;
   }
-  .claw-msg-user { color: #e0e0e0; }
-  .claw-msg-user::before { content: "> "; color: #00ff88; }
-  .claw-msg-assistant { color: #00ff88; }
+  /* User messages — slightly elevated block, like openclaw-tui user bubbles */
+  .claw-msg-user {
+    background: #2a2a2e;
+    color: #e8e8e8;
+    border-left: 2px solid #e8a030;
+  }
+  .claw-msg-user::before {
+    content: '> ';
+    color: #e8a030;
+    font-weight: bold;
+  }
+  /* Assistant messages — main BG, body text color */
+  .claw-msg-assistant {
+    background: #1a1a1a;
+    color: #cccccc;
+    border-left: 2px solid #444;
+  }
+  .claw-msg-assistant::before {
+    content: '4 ';  /* ∴ THEREFORE — matches openclaw-tui status symbol */
+    color: #e8a030;
+    font-weight: bold;
+  }
 
+  /* Input row — matches TUI bottom bar */
   #claw-chat-input-row {
-    border-top: 1px solid #333;
+    border-top: 1px solid #444;
+    background: #2a2a2e;
     display: flex;
     align-items: center;
     padding: 0 12px;
     flex-shrink: 0;
   }
   #claw-chat-prompt {
-    color: #00ff88;
-    font-size: 14px;
+    color: #e8a030;
+    font-size: 13px;
+    font-weight: bold;
     margin-right: 6px;
     flex-shrink: 0;
+    letter-spacing: 1px;
   }
   #claw-chat-input {
     flex: 1;
     background: transparent;
     border: none;
     outline: none;
-    color: #00ff88;
+    color: #e8e8e8;
     font-family: 'Courier New', monospace;
-    font-size: 14px;
-    padding: 12px 0;
-    caret-color: #00ff88;
+    font-size: 13px;
+    padding: 10px 0;
+    caret-color: #e8a030;
   }
-  #claw-chat-input::placeholder { color: #666; }
+  #claw-chat-input::placeholder { color: #555; }
   #claw-chat-send {
-    background: #00ff88;
-    color: #0a0a0a;
-    border: none;
+    background: #2a2a2e;
+    color: #e8a030;
+    border: 1px solid #e8a030;
     font-family: "Courier New", monospace;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    padding: 6px 14px;
+    padding: 5px 12px;
     cursor: pointer;
     flex-shrink: 0;
-    margin-left: 6px;
+    margin-left: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
-  #claw-chat-send:hover { background: #00cc6a; }
-  #claw-chat-send:disabled { background: #1e3a2a; color: #2a2a2a; cursor: default; }
+  #claw-chat-send:hover { background: #e8a030; color: #1a1a1a; }
+  #claw-chat-send:disabled { border-color: #444; color: #444; cursor: default; background: #1a1a1a; }
 </style>
 
 <button id="claw-chat-btn" title="Chat with CLAWTERM//DAEMON">&gt;_</button>
 
 <div id="claw-chat-panel">
   <div id="claw-chat-titlebar">
-    <div class="claw-dot claw-dot-r"></div>
-    <div class="claw-dot claw-dot-y"></div>
-    <div class="claw-dot claw-dot-g"></div>
-    <span id="claw-chat-title">CLAWTERM//CHAT v1.0</span>
+    <span id="claw-chat-title">CLAWTERM//DAEMON</span>
+    <span id="claw-chat-title-right">CNA v1.0 │ PORT 7220</span>
+  </div>
+  <div id="claw-chat-statusbar">
+    <span>∴ running</span>
+    <span class="status-dim">•</span>
+    <span>session active</span>
+    <span class="status-dim">│</span>
+    <span class="status-dim">APPLID: CLAWTERM</span>
   </div>
   <div id="claw-chat-messages">
     <div class="claw-msg claw-msg-assistant">CLAWTERM//DAEMON online. Session initialized.
 Ask about the protocol, deployment, or architecture.</div>
   </div>
   <div id="claw-chat-input-row">
-    <span id="claw-chat-prompt">$</span>
-    <input id="claw-chat-input" type="text" placeholder="> enter command..." autocomplete="off" />
+    <span id="claw-chat-prompt">&gt;_</span>
+    <input id="claw-chat-input" type="text" placeholder="enter command..." autocomplete="off" />
     <button id="claw-chat-send">SEND</button>
   </div>
 </div>
