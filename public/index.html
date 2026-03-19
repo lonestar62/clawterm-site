@@ -717,7 +717,7 @@
     width: 380px;
     height: 520px;
     background: #0a0a0a;
-    border: 1px solid #1e1e1e;
+    border: 1px solid #00ff88;
     display: none;
     flex-direction: column;
     z-index: 9998;
@@ -755,7 +755,7 @@
   }
   #claw-chat-messages::-webkit-scrollbar { width: 4px; }
   #claw-chat-messages::-webkit-scrollbar-track { background: #0a0a0a; }
-  #claw-chat-messages::-webkit-scrollbar-thumb { background: #1e1e1e; }
+  #claw-chat-messages::-webkit-scrollbar-thumb { background: #444; }
 
   .claw-msg {
     font-size: 13px;
@@ -763,12 +763,12 @@
     white-space: pre-wrap;
     word-break: break-word;
   }
-  .claw-msg-user { color: #aaa; }
-  .claw-msg-user::before { content: '> '; color: #888; }
+  .claw-msg-user { color: #e0e0e0; }
+  .claw-msg-user::before { content: "> "; color: #00ff88; }
   .claw-msg-assistant { color: #00ff88; }
 
   #claw-chat-input-row {
-    border-top: 1px solid #1e1e1e;
+    border-top: 1px solid #333;
     display: flex;
     align-items: center;
     padding: 0 12px;
@@ -791,7 +791,21 @@
     padding: 12px 0;
     caret-color: #00ff88;
   }
-  #claw-chat-input::placeholder { color: #2a2a2a; }
+  #claw-chat-input::placeholder { color: #666; }
+  #claw-chat-send {
+    background: #00ff88;
+    color: #0a0a0a;
+    border: none;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 6px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 6px;
+  }
+  #claw-chat-send:hover { background: #00cc6a; }
+  #claw-chat-send:disabled { background: #1e3a2a; color: #2a2a2a; cursor: default; }
 </style>
 
 <button id="claw-chat-btn" title="Chat with CLAWTERM//DAEMON">&gt;_</button>
@@ -810,6 +824,7 @@ Ask about the protocol, deployment, or architecture.</div>
   <div id="claw-chat-input-row">
     <span id="claw-chat-prompt">$</span>
     <input id="claw-chat-input" type="text" placeholder="> enter command..." autocomplete="off" />
+    <button id="claw-chat-send">SEND</button>
   </div>
 </div>
 
@@ -819,6 +834,9 @@ Ask about the protocol, deployment, or architecture.</div>
   var panel = document.getElementById('claw-chat-panel');
   var msgs = document.getElementById('claw-chat-messages');
   var input = document.getElementById('claw-chat-input');
+  var sendBtn = document.getElementById('claw-chat-send');
+
+  sendBtn.addEventListener('click', function () { send(); });
   var history = [];
 
   btn.addEventListener('click', function () {
@@ -839,7 +857,7 @@ Ask about the protocol, deployment, or architecture.</div>
     var text = input.value.trim();
     if (!text) return;
     input.value = '';
-    input.disabled = true;
+    input.disabled = true; sendBtn.disabled = true;
 
     addMsg('user', text);
     history.push({ role: 'user', content: text });
@@ -860,7 +878,7 @@ Ask about the protocol, deployment, or architecture.</div>
         return reader.read().then(function (result) {
           if (result.done) {
             history.push({ role: 'assistant', content: fullText });
-            input.disabled = false;
+            input.disabled = false; sendBtn.disabled = false;
             input.focus();
             return;
           }
@@ -888,7 +906,7 @@ Ask about the protocol, deployment, or architecture.</div>
       return read();
     }).catch(function (err) {
       assistantDiv.textContent = 'ERROR: ' + err.message;
-      input.disabled = false;
+      input.disabled = false; sendBtn.disabled = false;
     });
   }
 
