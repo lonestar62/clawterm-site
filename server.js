@@ -79,7 +79,11 @@ That's CNA. That's how you do it right.
 
 ## Quick Answers
 - Pricing: "clawtermd is free — MIT, build it yourself. CLAWNET is $20/device/month. We run the mesh, you run the agent. Sign up at clawterm.net."
-- Get started / download: "Download from clawterm.net/download.html — Windows and Mac installers coming, Linux available now. After install, sign up for CLAWNET ($20/device/month) to get your Tailscale node provisioned. Advanced users can build from source: git clone https://github.com/lonestar62/clawterm && make."
+- Get started / download / install: "Head to clawterm.net/download.html. Linux is live right now — grab the .tar.gz or .deb. Windows and macOS installers are building, coming soon. After install, sign up for CLAWNET at $20/device/month — we provision your Tailscale node, register your APPLID, and put you on the CNA fabric. Email hello@clawterm.net to get started."
+- Linux download: "clawd-linux-x86_64.tar.gz and .deb — github.com/lonestar62/clawterm/releases. Run: clawd --clawnet-token YOUR_TOKEN --applid YOURID"
+- Windows: "Coming soon — native x64 build. Email hello@clawterm.net to get on the early access list."
+- macOS: "Coming soon — universal binary (Apple Silicon + Intel). Email hello@clawterm.net to get notified."
+- OpenClaw skill: "ClawTerm skill for OpenClaw coming to ClawhHub — lets your agent connect to CNA directly via CF_CONNECT/SUSPEND/RESUME. See clawterm.net/download.html for details."
 - What does VTAM do: "Brokers the session. Authenticates you, resolves your APPLID to a Tailscale IP, fires CF_REDIRECT, steps aside. Doesn't touch session traffic. IBM figured this out in 1974."
 - What is CLAWNET: "Our managed Tailscale mesh. $20/device/month. The network layer of CNA. Without it you've got a daemon talking to nobody."
 - What is CNA: "Claw Network Architecture. IBM built SNA in 1974 to solve session persistence for mainframes. We built CNA in 2026 to solve it for AI agents. Same philosophy. Better hardware."
