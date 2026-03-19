@@ -328,6 +328,98 @@
     </div>
   </div>
 
+
+  <!-- CLAWNET Management -->
+  <div class="section">
+    <div class="section-label">How CLAWNET Manages Your Tailscale Node</div>
+
+    <p style="font-size:12px;color:#787878;line-height:1.8;margin-bottom:20px;">
+      You don't manage Tailscale. We do. Here's exactly what happens when you provision a CLAWNET device.
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+
+      <div style="background:#111;border:1px solid #1e1e1e;padding:20px;">
+        <div style="font-size:11px;color:#e8a030;letter-spacing:2px;margin-bottom:12px;">OUR TAILNET</div>
+        <div style="font-size:12px;color:#787878;line-height:1.8;">
+          All CLAWNET devices join the <span style="color:#cccccc">DeepTxAI tailnet</span>.
+          We own and operate it. You get a tagged node — isolated from other customers via Tailscale ACLs.
+          <br><br>
+          <span style="color:#00ff41">tag:tenant-{your-id}</span> — your devices only talk to VTAM and each other.
+          Cross-tenant routing is blocked at the ACL layer.
+        </div>
+      </div>
+
+      <div style="background:#111;border:1px solid #1e1e1e;padding:20px;">
+        <div style="font-size:11px;color:#e8a030;letter-spacing:2px;margin-bottom:12px;">YOUR DEVICE</div>
+        <div style="font-size:12px;color:#787878;line-height:1.8;">
+          clawd calls <span style="color:#cccccc">tailscale up --auth-key {key}</span> on startup.
+          Your device gets a Tailscale IP (100.x.x.x). clawd registers that IP in Keeper against your APPLID.
+          <br><br>
+          From that point, <span style="color:#00ff41">VTAM can dial your APPLID → gets your IP → CF_REDIRECT → direct session</span>.
+          You own the device. We own the tunnel.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Provisioning flow -->
+    <div style="background:#0d0d0d;border:1px solid #1e1e1e;padding:20px;margin-bottom:24px;">
+      <div style="font-size:11px;color:#555;letter-spacing:2px;margin-bottom:14px;">PROVISIONING FLOW</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;font-size:10px;text-align:center;">
+        <div style="padding:12px 8px;border:1px solid #1e1e1e;background:#111;">
+          <div style="color:#e8a030;font-size:16px;margin-bottom:6px;">1</div>
+          <div style="color:#cccccc;font-weight:700;margin-bottom:4px;">Order</div>
+          <div style="color:#555;">ClawForge checkout or email us</div>
+        </div>
+        <div style="padding:12px 8px;border:1px solid #1e1e1e;background:#0d1a0d;">
+          <div style="color:#e8a030;font-size:16px;margin-bottom:6px;">2</div>
+          <div style="color:#cccccc;font-weight:700;margin-bottom:4px;">We Provision</div>
+          <div style="color:#555;">Tailscale auth key created, APPLID reserved in Keeper</div>
+        </div>
+        <div style="padding:12px 8px;border:1px solid #1e1e1e;background:#111;">
+          <div style="color:#e8a030;font-size:16px;margin-bottom:6px;">3</div>
+          <div style="color:#cccccc;font-weight:700;margin-bottom:4px;">You Install</div>
+          <div style="color:#555;">clawd joins tailnet, gets 100.x.x.x IP</div>
+        </div>
+        <div style="padding:12px 8px;border:1px solid #1e1e1e;background:#0d1a0d;">
+          <div style="color:#e8a030;font-size:16px;margin-bottom:6px;">4</div>
+          <div style="color:#cccccc;font-weight:700;margin-bottom:4px;">Auto-Register</div>
+          <div style="color:#555;">clawd POSTs IP to Keeper → APPLID goes live</div>
+        </div>
+        <div style="padding:12px 8px;border:1px solid #1e1e1e;background:#001a0a;">
+          <div style="color:#00ff41;font-size:16px;margin-bottom:6px;">5</div>
+          <div style="color:#00ff41;font-weight:700;margin-bottom:4px;">Live on CNA</div>
+          <div style="color:#555;">F2 → type APPLID → VTAM routes → direct session</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:11px;">
+      <div style="background:#111;border:1px solid #1e1e1e;padding:14px;">
+        <div style="color:#e8a030;margin-bottom:6px;letter-spacing:1px;">BILLING</div>
+        <div style="color:#787878;line-height:1.7;">
+          Each active APPLID = one seat.<br>
+          <span style="color:#cccccc">$20/device/month.</span><br>
+          Powered by Tailscale Business (~$6/seat). We operate the mesh, you get the margin on the service.
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid #1e1e1e;padding:14px;">
+        <div style="color:#e8a030;margin-bottom:6px;letter-spacing:1px;">ISOLATION</div>
+        <div style="color:#787878;line-height:1.7;">
+          Tailscale ACL tags isolate every tenant.<br>
+          <span style="color:#00ff41">tag:tenant-{id}</span> blocks cross-customer routing at the network layer. Not app-layer. Real isolation.
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid #1e1e1e;padding:14px;">
+        <div style="color:#e8a030;margin-bottom:6px;letter-spacing:1px;">REVOCATION</div>
+        <div style="color:#787878;line-height:1.7;">
+          We can revoke any device instantly — Tailscale key revoked, APPLID deregistered from Keeper. Non-payment = device suspended in real-time.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- OpenClaw Skill -->
   <div class="section">
     <div class="section-label">OpenClaw Integration</div>
