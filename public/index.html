@@ -839,7 +839,11 @@ Ask about the protocol, deployment, or architecture.</div>
   sendBtn.addEventListener('click', function () { send(); });
   var history = [];
 
-  btn.addEventListener('click', function () {
+  panel.addEventListener("click", function (e) {
+    if (e.target !== sendBtn) input.focus();
+  });
+
+  btn.addEventListener("click", function () {
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) input.focus();
   });
