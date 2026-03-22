@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://clawterm.net/sitemap.xml
+
+# Block internal/admin paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
